@@ -4,6 +4,7 @@ branches:
   only:
   - master
   - vNext
+  - coveralls
 
 skip_tags: true
 
@@ -69,6 +70,12 @@ install:
 
     Write-Host "Should publish on success = " -NoNewLine
     Write-Host $Env:publish_on_success -ForegroundColor "Green"
+
+    # Fake a merge commit
+    $Env:SHOULD_RUN_COVERALLS = $True
+    $Env:SHOULD_RUN_COVERITY_ANALYSIS = $False
+    $Env:SHOULD_PACKAGE_NUGET_ARTIFACT = $True
+    #
 
     If ($Env:SHOULD_PACKAGE_NUGET_ARTIFACT -eq $True)
     {
